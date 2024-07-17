@@ -1,7 +1,7 @@
 {
   "name": "@unique-ag/unique-cli",
   "description": "Unique CLI, wrapping the most common actions needed by Uniques clients into a single command line tool.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Unique AG",
   "bin": {
     "qcli": "./bin/run.js"
