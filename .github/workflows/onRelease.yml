@@ -16,4 +16,5 @@ jobs:
       - run: npm install
       - uses: JS-DevTools/npm-publish@19c28f1ef146469e409470805ea4279d47c3d35c
         with:
+          access: restricted # until we make it BETA available
           token: ${{ secrets.NPMJS_GRANULAR_ACCESS_TOKEN }}
