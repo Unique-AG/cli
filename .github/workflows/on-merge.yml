@@ -14,123 +14,37 @@ env:
   RELEASE_REPO: cli
   
 jobs:
-  publish-bundle:
-    name: Collecting release artifacts and publishing them to the release repository
+  release:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
-      -
-        uses: actions/checkout@v4
-        with:
-          path: monorepo
-
-      - 
-        uses: tibdex/github-app-token@v2
-        id: ci-trigger-app-token
-        with:
-          private_key: ${{ secrets.CI_TRIGGER_APP_PRIVATE_KEY }}
-          app_id: ${{ secrets.CI_TRIGGER_APP_ID }}
-          installation_retrieval_mode: id
-          installation_retrieval_payload: ${{ secrets.CI_TRIGGER_APP_INSTALLATION_ID }}
-
-      - 
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.RELEASE_REPO_OWNER }}/${{ env.RELEASE_REPO }}
-          path: releaserepo
-          token: ${{ steps.ci-trigger-app-token.outputs.token }}
-
-      - 
-        run: npm i && npm run build
-        working-directory: monorepo/cli
-      
-      - 
-        working-directory: monorepo
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - name: Check if version already exists
+        id: version-check
         run: |
-          ./bin/uq bundle:compose --configMap ./enterprise/release/default-config.yaml --outputDirectory ../releaserepo
+          package_version=$(node -p "require('./package.json').version")
+          exists=$(gh api repos/${{ github.repository }}/releases/tags/v$package_version >/dev/null 2>&1 && echo "true" || echo "")
 
-      - 
-        uses: stefanzweifel/git-auto-commit-action@v5
+          if [ -n "$exists" ];
+          then
+            echo "Version v$package_version already exists"
+            echo "::warning file=package.json,line=1::Version v$package_version already exists - no release will be created. If you want to create a new release, please update the version in package.json and push again."
+            echo "skipped=true" >> $GITHUB_OUTPUT
+          else
+            echo "Version v$package_version does not exist. Creating release..."
+            echo "skipped=false" >> $GITHUB_OUTPUT
+            echo "tag=v$package_version" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Github Release
+        uses: ncipollo/release-action@v1
+        if: ${{ steps.version-check.outputs.skipped == 'false' }}
         with:
-          repository: releaserepo
-          commit_message: "ci: update release bundle"
-          commit_options: "--no-verify"
-          commit_user_name: "GitHub Actions"
-          commit_user_email: ""
-
-  publish-backend-service-chart:
-    uses: ./.github/workflows/charts-backendservice.cd.yaml
-    secrets: inherit
-
-  publish-web-app-chart:
-    uses: ./.github/workflows/charts-webapp.cd.yaml
-    secrets: inherit
-
-  publish-image-pull-secret-chart:
-    uses: ./.github/workflows/charts-imgpullsecret.cd.yaml
-    secrets: inherit
-
-  transfer-images:
-    timeout-minutes: 30
-    name: Transferring docker images that are part of the release
-    runs-on: ubuntu-latest
-    steps:
-      -
-        uses: actions/checkout@v4
-        with:
-          path: monorepo
-
-      - 
-        run: npm i && npm run build
-        working-directory: monorepo/cli
-      
-      - 
-        name: Conditionally transfer docker images (if not skipped)
-        working-directory: monorepo
-        if: ${{ inputs.skip_docker_transfer == 'no' }}
-        run: |
-          docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} uniqueapp.azurecr.io
-          docker login -u ${{ secrets.AZURE_ACR_RELEASE_TOKEN_NAME }} -p ${{ secrets.AZURE_ACR_RELEASE_TOKEN_PASSWORD }} ${{ secrets.AZURE_ACR_RELEASE_LOGIN_SERVER }}
-          ./bin/uq bundle:ti -c ./enterprise/release/release.yaml -n ${{ inputs.release_name }} -b ${{ inputs.batch_size }}
-
-      - 
-        if: ${{ inputs.skip_docker_transfer == 'yes' }}
-        run: |
-          echo "Skipping Docker image transfer step as [skip_docker_transfer='yes']."
-
-  create-release:
-    name: Create a release on the release repository
-    runs-on: ubuntu-latest
-    needs:
-      - publish-bundle
-      - publish-backend-service-chart
-      - publish-web-app-chart
-      - publish-image-pull-secret-chart
-      - transfer-images
-    steps:
-
-      - 
-        uses: tibdex/github-app-token@v2
-        id: ci-trigger-app-token
-        with:
-          private_key: ${{ secrets.CI_TRIGGER_APP_PRIVATE_KEY }}
-          app_id: ${{ secrets.CI_TRIGGER_APP_ID }}
-          installation_retrieval_mode: id
-          installation_retrieval_payload: ${{ secrets.CI_TRIGGER_APP_INSTALLATION_ID }}
-
-      - 
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ steps.ci-trigger-app-token.outputs.token }}
-          script: |
-            const releaseName = "${{ inputs.release_name }}";
-            const releaseRepo = "${{ env.RELEASE_REPO }}";
-            const response = await github.rest.repos.createRelease({
-              owner: context.repo.owner,
-              repo: releaseRepo,
-              tag_name: releaseName,
-              name: releaseName,
-              body: `Release ${releaseName} created, [release notes](https://unique-ch.atlassian.net/wiki/x/aoB4JQ).`,
-              draft: false,
-              prerelease: false
-            });
-            core.setOutput('release_url', response.data.html_url);
+          name: ${{ steps.version-check.outputs.tag }}
+          tag: ${{ steps.version-check.outputs.tag }}
+          commit: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          skipIfReleaseExists: true
