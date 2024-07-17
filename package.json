@@ -1,5 +1,5 @@
 {
-  "name": "@unique-ag/unique-cli",
+  "name": "@unique-ag/cli",
   "description": "Unique CLI, wrapping the most common actions needed by Uniques clients into a single command line tool.",
   "version": "0.1.2",
   "author": "Unique AG",
