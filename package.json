@@ -1,0 +1,73 @@
+{
+  "name": "unique-cli",
+  "description": "Unique CLI, wrapping the most common actions needed by Uniques clients into a single command line tool.",
+  "version": "0.1.0",
+  "author": "Unique AG",
+  "bin": {
+    "qcli": "./bin/run.js"
+  },
+  "bugs": "https://github.com/Unique-AG/cli/issues",
+  "dependencies": {
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "@oclif/plugin-plugins": "^5"
+  },
+  "devDependencies": {
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4",
+    "@types/chai": "^4",
+    "@types/mocha": "^10",
+    "@types/node": "^18",
+    "chai": "^4",
+    "eslint": "^8",
+    "eslint-config-oclif": "^5",
+    "eslint-config-oclif-typescript": "^3",
+    "eslint-config-prettier": "^9",
+    "mocha": "^10",
+    "oclif": "^4",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "/bin",
+    "/dist",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/Unique-AG/cli",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "type": "module",
+  "oclif": {
+    "bin": "qcli",
+    "dirname": "qcli",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "mirror": {
+        "description": "Functionality needed to mirror Unique artifacts into client environments to ensure availability, scalability and resilience."
+      }
+    }
+  },
+  "repository": "Unique-AG/cli",
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "lint": "eslint . --ext .ts",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "npm run lint",
+    "prepack": "oclif manifest && oclif readme",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif readme && git add README.md"
+  },
+  "types": "dist/index.d.ts"
+}
