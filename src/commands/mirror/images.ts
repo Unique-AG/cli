@@ -1,4 +1,4 @@
-import {Args, Command, Flags} from '@oclif/core'
+import { Args, Command, Flags } from '@oclif/core'
 
 export default class MirrorImages extends Command {
   static override args = {
@@ -22,7 +22,7 @@ export default class MirrorImages extends Command {
     const {args, flags} = await this.parse(MirrorImages)
 
     const name = flags.name ?? 'world'
-    this.log(`hello ${name} from /Users/dominik.meyer/Development/unique/cli/src/commands/mirror/images.ts`)
+    this.log(`hello ${name}`)
     if (args.file && flags.force) {
       this.log(`you input --force and --file: ${args.file}`)
     }
