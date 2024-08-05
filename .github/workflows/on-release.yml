@@ -5,6 +5,8 @@ on:
   release:
     types: 
       - released
+    branches:
+      - main
 
 jobs:
   publish:
