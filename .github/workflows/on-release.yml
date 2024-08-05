@@ -2,12 +2,8 @@ name: "Publish NPM Package"
 
 on:
   workflow_dispatch:
-  release:
-    types: 
-      - released
-    branches:
-      - main
-
+  workflow_call:
+    
 jobs:
   publish:
     runs-on: ubuntu-latest

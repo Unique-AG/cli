@@ -48,3 +48,10 @@ jobs:
           commit: ${{ github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
           skipIfReleaseExists: true
+
+  # We can not use it as release trigger due to https://github.com/orgs/community/discussions/25281, so we call it directly after release
+  publish:
+    needs:
+      - release
+    uses: ./.github/workflows/on-release.yml
+    secrets: inherit
