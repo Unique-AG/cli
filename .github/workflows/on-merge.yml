@@ -1,13 +1,22 @@
-# test
-name: version, tag and github release
+name: "Release"
 
 on:
-  workflow_dispatch: # not triggered until first commands added
-  # push:
-  #   branches: [main]
+  push:
+    branches:
+      - main
+    paths:
+      - src/**
+      - examples/**
+      - bin/**
 
+env:
+  RELEASE_REPO_OWNER: Unique-AG
+  RELEASE_REPO: cli
+  
 jobs:
   release:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,29 +38,13 @@ jobs:
             echo "tag=v$package_version" >> $GITHUB_OUTPUT
           fi
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - name: Setup git
-        if: ${{ steps.version-check.outputs.skipped == 'false' }}
-        run: |
-          git config --global user.email ${{ secrets.GH_EMAIL }}
-          git config --global user.name ${{ secrets.GH_USERNAME }}
-      - name: Generate oclif README
-        if: ${{ steps.version-check.outputs.skipped == 'false' }}
-        id: oclif-readme
-        run: |
-          npm install
-          npm exec oclif readme
-          if [ -n "$(git status --porcelain)" ]; then
-            git add .
-            git commit -am "chore: update README.md"
-            git push -u origin ${{ github.ref_name }}
-          fi
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Github Release
-        uses: ncipollo/release-action@2c591bcc8ecdcd2db72b97d6147f871fcd833ba5
+        uses: ncipollo/release-action@v1
         if: ${{ steps.version-check.outputs.skipped == 'false' }}
         with:
           name: ${{ steps.version-check.outputs.tag }}
           tag: ${{ steps.version-check.outputs.tag }}
           commit: ${{ github.ref_name }}
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           skipIfReleaseExists: true

@@ -1,9 +1,9 @@
-name: publish
+name: "Publish NPM Package"
 
 on:
-  workflow_dispatch: # for now, we will trigger this manually until a bigger maturity is reached
-  # release:
-  #   types: [released]
+  release:
+    types: 
+      - released
 
 jobs:
   publish:

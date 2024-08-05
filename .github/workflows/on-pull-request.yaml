@@ -1,0 +1,41 @@
+name: "Housekeeping"
+
+on:
+  pull_request:
+    branches: 
+      - main
+    paths:
+      - src/**
+      - examples/**
+      - bin/**
+
+jobs:
+  keep-house: # a very trivial, KISS approach to make sure that the version of the package.json and the README.md should have been touched when touching code
+    runs-on: 
+      - ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Gather changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/*.ts
+            **/*.json
+            **/*.md
+          files_ignore: |
+            **/node_modules/**
+
+      - name: Checking changed files
+        env:
+          CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          if echo "$CHANGED_FILES" | grep -qE "README\.md.*package\.json|package\.json.*README\.md"; then
+            echo "You updated the README and the package.json. Good job!"
+          else
+            echo "You did either not update the README or not update the package.json or both. Do it."
+            exit 1
+          fi

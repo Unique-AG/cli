@@ -1,7 +1,7 @@
 {
   "name": "@unique-ag/cli",
   "description": "Unique CLI, wrapping the most common actions needed by Uniques clients into a single command line tool.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Unique AG",
   "bin": {
     "qcli": "./bin/run.js"
@@ -10,7 +10,9 @@
   "dependencies": {
     "@oclif/core": "^4",
     "@oclif/plugin-help": "^6",
-    "@oclif/plugin-plugins": "^5"
+    "@oclif/plugin-plugins": "^5",
+    "joi": "^17.13.3",
+    "yaml": "^2.4.5"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
