@@ -33,9 +33,9 @@ jobs:
         env:
           CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          if echo "$CHANGED_FILES" | grep -qE "README\.md.*package\.json|package\.json.*README\.md"; then
-            echo "You updated the README and the package.json. Good job!"
-          else
-            echo "You did either not update the README or not update the package.json or both. Do it."
+            if echo "$CHANGED_FILES" | grep -qE "README\.md.*package\.json|package\.json.*README\.md|README\.md.*CHANGELOG\.md|CHANGELOG\.md.*README\.md|package\.json.*CHANGELOG\.md|CHANGELOG\.md.*package\.json"; then
+            echo "You updated the README, CHANGELOG, and the package.json. Good job!"
+            else
+            echo "You did not update either the README, CHANGELOG, or the package.json, or all of them. Please do so."
             exit 1
-          fi
+            fi
