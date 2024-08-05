@@ -20,7 +20,7 @@ $ npm install -g @unique-ag/cli
 $ qcli COMMAND
 running command...
 $ qcli (--version)
-@unique-ag/cli/0.3.0 darwin-arm64 node-v20.14.0
+@unique-ag/cli/0.3.1 darwin-arm64 node-v20.14.0
 $ qcli --help [COMMAND]
 USAGE
   $ qcli COMMAND
@@ -159,7 +159,7 @@ EXAMPLES
   $ qcli mirror images
 ```
 
-_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.3.0/src/commands/mirror/images.ts)_
+_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.3.1/src/commands/mirror/images.ts)_
 
 ## `qcli plugins`
 
