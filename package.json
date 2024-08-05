@@ -1,7 +1,7 @@
 {
   "name": "@unique-ag/cli",
   "description": "Unique CLI, wrapping the most common actions needed by Uniques clients into a single command line tool.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Unique AG",
   "bin": {
     "qcli": "./bin/run.js"
@@ -63,13 +63,15 @@
   },
   "repository": "Unique-AG/cli",
   "scripts": {
-    "build": "shx rm -rf dist && tsc -b",
+    "build": "npm run clean && tsc -b",
+    "clean": "shx rm -rf dist",
     "lint": "eslint . --ext .ts",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "npm run lint",
-    "prepack": "oclif manifest && oclif readme",
+    "prepack": "oclif manifest && npm run readme",
+    "readme": "npm run build && oclif readme --no-aliases",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
-    "version": "oclif readme && git add README.md"
+    "version": "npm run readme && git add README.md"
   },
   "types": "dist/index.d.ts"
 }

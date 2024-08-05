@@ -6,6 +6,10 @@ Unique CLI, wrapping the most common actions needed by Uniques clients into a si
 > [!NOTE]
 > The Unique CLI is incubating. Until version 1.0.0 also minor versions can contain breaking changes 💥
 
+<!-- toc -->
+
+<!-- tocstop -->
+
 ## Contributing
 See the [contributing guide](CONTRIBUTING.md) for more information.
 
@@ -16,7 +20,7 @@ $ npm install -g @unique-ag/cli
 $ qcli COMMAND
 running command...
 $ qcli (--version)
-@unique-ag/cli/0.3.0 darwin-arm64 node-v20.14.0
+@unique-ag/cli/0.3.1 darwin-arm64 node-v20.14.0
 $ qcli --help [COMMAND]
 USAGE
   $ qcli COMMAND
@@ -57,7 +61,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.2.6
 
 ## `qcli mirror images`
 
-Pulls images from a source, retags them, and pushes them to a new registry. For security reasons, the active session must be preemptively logged in to both docker registries. The command treats images as immutable and will refuse to retag an image if it already exists in the target registry.
+Pulls images from a source, retags them, and pushes them to a new registry. For security reasons, the active session must be preemptively logged in to both docker registries. The "imageListFile" flag specifies which images to mirror. You can find an example config file in https://github.com/Unique-AG/cli/tree/main/examples.
 
 ```
 USAGE
@@ -75,8 +79,8 @@ FLAGS
 
 DESCRIPTION
   Pulls images from a source, retags them, and pushes them to a new registry. For security reasons, the active session
-  must be preemptively logged in to both docker registries. The command treats images as immutable and will refuse to
-  retag an image if it already exists in the target registry.
+  must be preemptively logged in to both docker registries. The "imageListFile" flag specifies which images to mirror.
+  You can find an example config file in https://github.com/Unique-AG/cli/tree/main/examples.
 
 ALIASES
   $ qcli m i
@@ -103,7 +107,7 @@ EXAMPLES
   $ qcli mirror images
 ```
 
-_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.3.0/src/commands/mirror/images.ts)_
+_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.3.1/src/commands/mirror/images.ts)_
 
 ## `qcli plugins`
 
@@ -295,7 +299,6 @@ DESCRIPTION
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/update.ts)_
 <!-- commandsstop -->
-## Table of contents
-<!-- toc -->
 
-<!-- tocstop -->
+## Examples
+For some commands, you find example files in [examples](https://github.com/Unique-AG/cli/tree/main/examples) folder. Most commands with example files also have a default example file that is used if no file is specified.
