@@ -1,4 +1,4 @@
-import { Command, Flags, ux } from '@oclif/core';
+import { Command, Flags, Interfaces, ux } from '@oclif/core';
 import Joi from 'joi';
 import { readFile, stat } from 'node:fs/promises';
 import { parse } from 'yaml';
@@ -21,55 +21,69 @@ const schema = Joi.object({
 export default class MirrorImages extends Command {
   static aliases = ['m:i'];
   static args = {}
+<<<<<<< Updated upstream
   static description = 'Pulls images from a source, retags them, and pushes them to a new registry. For security reasons, the active session must be preemptively logged in to both docker registries. The command treats images as immutable and will refuse to retag an image if it already exists in the target registry.'
+=======
+  static description = `
+Pulls images from a source, retags them, and pushes them to a new registry.
+The "image-list-file" flag specifies which images to mirror. You can find an example config file in https://github.com/Unique-AG/cli/tree/main/examples.
+
+For security reasons, the active session must be preemptively logged in to both OCI registries.`
+
+>>>>>>> Stashed changes
   static examples = [`
-export SOURCE_DOCKER_REGISTRY: <VALUE>
-export SOURCE_DOCKER_USERNAME: <SENSITIVE_VALUE>
-export SOURCE_DOCKER_PASSWORD: <SENSITIVE_VALUE>
-export TARGET_DOCKER_REGISTRY: <VALUE>
-export TARGET_DOCKER_USERNAME: <SENSITIVE_VALUE>
-export TARGET_DOCKER_PASSWORD: <SENSITIVE_VALUE>
-docker login $SOURCE_DOCKER_REGISTRY -u $SOURCE_DOCKER_USERNAME -p $SOURCE_DOCKER_PASSWORD
-docker login $TARGET_DOCKER_REGISTRY -u $TARGET_DOCKER_USERNAME -p $TARGET_DOCKER_PASSWORD
+export SOURCE_OCI_REGISTRY: <VALUE>
+export SOURCE_OCI_USERNAME: <SENSITIVE_VALUE>
+export SOURCE_OCI_PASSWORD: <SENSITIVE_VALUE>
+export TARGET_OCI_REGISTRY: <VALUE>
+export TARGET_OCI_USERNAME: <SENSITIVE_VALUE>
+export TARGET_OCI_PASSWORD: <SENSITIVE_VALUE>
+docker login $SOURCE_OCI_REGISTRY -u $SOURCE_OCI_USERNAME -p $SOURCE_OCI_PASSWORD
+docker login $TARGET_OCI_REGISTRY -u $TARGET_OCI_USERNAME -p $TARGET_OCI_PASSWORD
 <%= config.bin %> <%= command.id %>
 `, `
-export SOURCE_DOCKER_REGISTRY: <VALUE>
-export SOURCE_DOCKER_USERNAME: <SENSITIVE_VALUE>
-export SOURCE_DOCKER_PASSWORD: <SENSITIVE_VALUE>
-export TARGET_DOCKER_REGISTRY: <VALUE>
-export TARGET_DOCKER_USERNAME: <SENSITIVE_VALUE>
-export TARGET_DOCKER_PASSWORD: <SENSITIVE_VALUE>
-docker login $SOURCE_DOCKER_REGISTRY -u $SOURCE_DOCKER_USERNAME -p $SOURCE_DOCKER_PASSWORD
-az acr login --name polishednight8579
+export SOURCE_OCI_REGISTRY: <VALUE>
+export SOURCE_OCI_USERNAME: <SENSITIVE_VALUE>
+export SOURCE_OCI_PASSWORD: <SENSITIVE_VALUE>
+docker login $SOURCE_OCI_REGISTRY -u $SOURCE_OCI_USERNAME -p $SOURCE_OCI_PASSWORD
+az acr login --name <REGISTRY_NAME>
 <%= config.bin %> <%= command.id %>
 `]
 
   static flags = {
-    batchSize: Flags.integer({
+    'batch-size': Flags.integer({
       char: 'b',
       default: BATCH_SIZE,
       description: 'Number of images to transfer in a single batch in parallel. The higher the number, the more resources will be consumed.',
       max: 8,
       min: 1
     }),
-    imageListFile: Flags.string({
+    'image-list-file': Flags.string({
       char: 'f',
       default: `examples/mirror-images.schema.yaml`,
       description: 'Path to file that contains a list of images to mirror.',
       required: true
     }),
-    sourceRegistry: Flags.string({
+    'source-registry': Flags.string({
       char: 's',
-      description: 'Source registry from where the images will be pulled, this overrides the value specified in the imageListFile.'
+      description: 'Source registry from where the images will be pulled, this overrides the value specified in the image-list-file.'
     }),
-    targetRegistry: Flags.string({
+    'target-registry': Flags.string({
       char: 't',
-      description: 'Target registry where the images will go, this overrides the value specified in the imageListFile.'
+      description: 'Target registry where the images will go, this overrides the value specified in the image-list-file.'
     }),
   }
 
+  private flags!: Interfaces.InferredFlags<typeof MirrorImages.flags>
+
   public async run(): Promise<void> {
-    const { flags: { batchSize, imageListFile, sourceRegistry, targetRegistry } } = await this.parse(MirrorImages)
+    const { flags } = await this.parse(MirrorImages);
+    this.flags = flags;
+    const batchSize = this.flags['batch-size'];
+    const imageListFile = this.flags['image-list-file'];
+    const sourceRegistry = this.flags['source-registry'];
+    const targetRegistry = this.flags['target-registry'];
+
     try {
       // Parse (if exists) config map
       const configMapValid = (await stat(imageListFile)).isFile();
@@ -101,21 +115,15 @@ az acr login --name polishednight8579
         batches.push(images.slice(i, i + batchSize));
       }
 
-
       await Promise.all(batches.map(async (batch) => {
-        await Promise.all(batch.map(async ({name}: {name: string}) => {
+        await Promise.all(batch.map(async ({ name }: { name: string }) => {
           const fullSourceTag = `${source}/${name}`;
           const fullTargetTag = `${target}/${name}`;
 
-              this.log(`Pulling ${ux.colorize(LIGHT_BLUE, `${fullSourceTag}`)}, tagging it as ${ux.colorize(LIGHT_BLUE, `${fullTargetTag} and shipping it back out again.`)}.`);
-              ux.action.start(`Transferring ${fullSourceTag} to ${fullTargetTag}`);
-              ux.action.status = 'Pulling';
-              await dockerPull(fullSourceTag);
-              ux.action.status = 'Tagging';
-              await dockerMove(fullSourceTag, fullTargetTag);
-              ux.action.status = 'Pushing';
-              await dockerPush(fullTargetTag);
-              ux.action.stop();
+          this.log(`Pulling ${ux.colorize(LIGHT_BLUE, `${fullSourceTag}`)}, tagging it as ${ux.colorize(LIGHT_BLUE, `${fullTargetTag} and shipping it back out again.`)}.`);
+          await dockerPull(fullSourceTag);
+          await dockerMove(fullSourceTag, fullTargetTag);
+          await dockerPush(fullTargetTag);
         }));
       }));
     } catch (error: unknown) {
