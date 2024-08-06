@@ -21,16 +21,12 @@ const schema = Joi.object({
 export default class MirrorImages extends Command {
   static aliases = ['m:i'];
   static args = {}
-<<<<<<< Updated upstream
-  static description = 'Pulls images from a source, retags them, and pushes them to a new registry. For security reasons, the active session must be preemptively logged in to both docker registries. The command treats images as immutable and will refuse to retag an image if it already exists in the target registry.'
-=======
   static description = `
 Pulls images from a source, retags them, and pushes them to a new registry.
 The "image-list-file" flag specifies which images to mirror. You can find an example config file in https://github.com/Unique-AG/cli/tree/main/examples.
 
 For security reasons, the active session must be preemptively logged in to both OCI registries.`
 
->>>>>>> Stashed changes
   static examples = [`
 export SOURCE_OCI_REGISTRY: <VALUE>
 export SOURCE_OCI_USERNAME: <SENSITIVE_VALUE>
