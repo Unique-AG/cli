@@ -4,15 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [0.4.0] - 2024-08-06
 
-### Breaking changes 💥
-
-#### `mirror:images`
-
-
 ### Changed
 #### `mirror:images`
 - **Breaking💥**: Flag syntax now uses lower-kebab-case instead of camelCase to adhere to [`oclif` best practices](https://github.com/oclif/oclif/blob/main/src/commands/readme.ts).
 - Stop using `ux.action` as it is not compatible with parallel processing (it is a singleton so it only updates one status at a time).
+- Revert CoPilot changes to the command to make it sequential in batches again.
 
 ### Added
 #### `mirror:charts`
