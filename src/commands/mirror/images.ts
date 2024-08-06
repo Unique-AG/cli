@@ -111,7 +111,9 @@ az acr login --name <REGISTRY_NAME>
         batches.push(images.slice(i, i + batchSize));
       }
 
-      await Promise.all(batches.map(async (batch) => {
+      for (const batch of batches) {
+        // Specifically want to wait in the loop to be sequential! It should be slower…
+        // eslint-disable-next-line no-await-in-loop
         await Promise.all(batch.map(async ({ name }: { name: string }) => {
           const fullSourceTag = `${source}/${name}`;
           const fullTargetTag = `${target}/${name}`;
@@ -121,7 +123,8 @@ az acr login --name <REGISTRY_NAME>
           await dockerMove(fullSourceTag, fullTargetTag);
           await dockerPush(fullTargetTag);
         }));
-      }));
+      }
+
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
       this.error(`Error transferring images: ${errorMessage}`);
