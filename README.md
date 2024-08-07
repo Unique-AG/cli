@@ -20,7 +20,7 @@ $ npm install -g @unique-ag/cli
 $ qcli COMMAND
 running command...
 $ qcli (--version)
-@unique-ag/cli/0.3.1 darwin-arm64 node-v20.14.0
+@unique-ag/cli/0.4.0 darwin-arm64 node-v20.14.0
 $ qcli --help [COMMAND]
 USAGE
   $ qcli COMMAND
@@ -30,6 +30,7 @@ USAGE
 ## Commands
 <!-- commands -->
 * [`qcli help [COMMAND]`](#qcli-help-command)
+* [`qcli mirror charts`](#qcli-mirror-charts)
 * [`qcli mirror images`](#qcli-mirror-images)
 * [`qcli plugins`](#qcli-plugins)
 * [`qcli plugins:inspect PLUGIN...`](#qcli-pluginsinspect-plugin)
@@ -59,55 +60,104 @@ DESCRIPTION
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.2.6/src/commands/help.ts)_
 
+## `qcli mirror charts`
+
+Pulls charts from a source and pushes them to a new registry.
+
+```
+USAGE
+  $ qcli mirror charts -f <value> [-k] [-s <value>] [-t <value>]
+
+FLAGS
+  -f, --chart-list-file=<value>    (required) [default: examples/mirror-charts.schema.yaml] Path to file that contains a
+                                   list of charts to mirror.
+  -k, --keep                       If true, keeps the downloaded tarballs.
+  -s, --source-repository=<value>  Source repository from where the charts will be pulled, this overrides the value
+                                   specified in the chart-list-file.
+  -t, --target-repository=<value>  Target repository where the charts will go, this overrides the value specified in the
+                                   chart-list-file.
+
+DESCRIPTION
+
+  Pulls charts from a source and pushes them to a new registry.
+  The "chart-list-file" flag specifies which charts to mirror. You can find an example config file in
+  https://github.com/Unique-AG/cli/tree/main/examples.
+
+  For security reasons, the active session must be preemptively logged in to both OCI registries.
+
+ALIASES
+  $ qcli m c
+
+EXAMPLES
+  export SOURCE_OCI_REGISTRY: <VALUE>
+  export SOURCE_OCI_USERNAME: <SENSITIVE_VALUE>
+  export SOURCE_OCI_PASSWORD: <SENSITIVE_VALUE>
+  export TARGET_OCI_REGISTRY: <VALUE>
+  export TARGET_OCI_USERNAME: <SENSITIVE_VALUE>
+  export TARGET_OCI_PASSWORD: <SENSITIVE_VALUE>
+  docker login $SOURCE_OCI_REGISTRY -u $SOURCE_OCI_USERNAME -p $SOURCE_OCI_PASSWORD
+  docker login $TARGET_OCI_REGISTRY -u $TARGET_OCI_USERNAME -p $TARGET_OCI_PASSWORD
+  $ qcli mirror charts
+
+  export SOURCE_OCI_REGISTRY: <VALUE>
+  export SOURCE_OCI_USERNAME: <SENSITIVE_VALUE>
+  export SOURCE_OCI_PASSWORD: <SENSITIVE_VALUE>
+  docker login $SOURCE_OCI_REGISTRY -u $SOURCE_OCI_USERNAME -p $SOURCE_OCI_PASSWORD
+  az acr login --name <REGISTRY_NAME>
+  $ qcli mirror charts
+```
+
+_See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.4.0/src/commands/mirror/charts.ts)_
+
 ## `qcli mirror images`
 
-Pulls images from a source, retags them, and pushes them to a new registry. For security reasons, the active session must be preemptively logged in to both docker registries. The "imageListFile" flag specifies which images to mirror. You can find an example config file in https://github.com/Unique-AG/cli/tree/main/examples.
+Pulls images from a source, retags them, and pushes them to a new registry.
 
 ```
 USAGE
   $ qcli mirror images -f <value> [-b <value>] [-s <value>] [-t <value>]
 
 FLAGS
-  -b, --batchSize=<value>       [default: 2] Number of images to transfer in a single batch in parallel. The higher the
-                                number, the more resources will be consumed.
-  -f, --imageListFile=<value>   (required) [default: examples/mirror-images.schema.yaml] Path to file that contains a
-                                list of images to mirror.
-  -s, --sourceRegistry=<value>  Source registry from where the images will be pulled, this overrides the value specified
-                                in the imageListFile.
-  -t, --targetRegistry=<value>  Target registry where the images will go, this overrides the value specified in the
-                                imageListFile.
+  -b, --batch-size=<value>       [default: 2] Number of images to transfer in a single batch in parallel. The higher the
+                                 number, the more resources will be consumed.
+  -f, --image-list-file=<value>  (required) [default: examples/mirror-images.schema.yaml] Path to file that contains a
+                                 list of images to mirror.
+  -s, --source-registry=<value>  Source registry from where the images will be pulled, this overrides the value
+                                 specified in the image-list-file.
+  -t, --target-registry=<value>  Target registry where the images will go, this overrides the value specified in the
+                                 image-list-file.
 
 DESCRIPTION
-  Pulls images from a source, retags them, and pushes them to a new registry. For security reasons, the active session
-  must be preemptively logged in to both docker registries. The "imageListFile" flag specifies which images to mirror.
-  You can find an example config file in https://github.com/Unique-AG/cli/tree/main/examples.
+
+  Pulls images from a source, retags them, and pushes them to a new registry.
+  The "image-list-file" flag specifies which images to mirror. You can find an example config file in
+  https://github.com/Unique-AG/cli/tree/main/examples.
+
+  For security reasons, the active session must be preemptively logged in to both OCI registries.
 
 ALIASES
   $ qcli m i
 
 EXAMPLES
-  export SOURCE_DOCKER_REGISTRY: <VALUE>
-  export SOURCE_DOCKER_USERNAME: <SENSITIVE_VALUE>
-  export SOURCE_DOCKER_PASSWORD: <SENSITIVE_VALUE>
-  export TARGET_DOCKER_REGISTRY: <VALUE>
-  export TARGET_DOCKER_USERNAME: <SENSITIVE_VALUE>
-  export TARGET_DOCKER_PASSWORD: <SENSITIVE_VALUE>
-  docker login $SOURCE_DOCKER_REGISTRY -u $SOURCE_DOCKER_USERNAME -p $SOURCE_DOCKER_PASSWORD
-  docker login $TARGET_DOCKER_REGISTRY -u $TARGET_DOCKER_USERNAME -p $TARGET_DOCKER_PASSWORD
+  export SOURCE_OCI_REGISTRY: <VALUE>
+  export SOURCE_OCI_USERNAME: <SENSITIVE_VALUE>
+  export SOURCE_OCI_PASSWORD: <SENSITIVE_VALUE>
+  export TARGET_OCI_REGISTRY: <VALUE>
+  export TARGET_OCI_USERNAME: <SENSITIVE_VALUE>
+  export TARGET_OCI_PASSWORD: <SENSITIVE_VALUE>
+  docker login $SOURCE_OCI_REGISTRY -u $SOURCE_OCI_USERNAME -p $SOURCE_OCI_PASSWORD
+  docker login $TARGET_OCI_REGISTRY -u $TARGET_OCI_USERNAME -p $TARGET_OCI_PASSWORD
   $ qcli mirror images
 
-  export SOURCE_DOCKER_REGISTRY: <VALUE>
-  export SOURCE_DOCKER_USERNAME: <SENSITIVE_VALUE>
-  export SOURCE_DOCKER_PASSWORD: <SENSITIVE_VALUE>
-  export TARGET_DOCKER_REGISTRY: <VALUE>
-  export TARGET_DOCKER_USERNAME: <SENSITIVE_VALUE>
-  export TARGET_DOCKER_PASSWORD: <SENSITIVE_VALUE>
-  docker login $SOURCE_DOCKER_REGISTRY -u $SOURCE_DOCKER_USERNAME -p $SOURCE_DOCKER_PASSWORD
-  az acr login --name polishednight8579
+  export SOURCE_OCI_REGISTRY: <VALUE>
+  export SOURCE_OCI_USERNAME: <SENSITIVE_VALUE>
+  export SOURCE_OCI_PASSWORD: <SENSITIVE_VALUE>
+  docker login $SOURCE_OCI_REGISTRY -u $SOURCE_OCI_USERNAME -p $SOURCE_OCI_PASSWORD
+  az acr login --name <REGISTRY_NAME>
   $ qcli mirror images
 ```
 
-_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.3.1/src/commands/mirror/images.ts)_
+_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.4.0/src/commands/mirror/images.ts)_
 
 ## `qcli plugins`
 

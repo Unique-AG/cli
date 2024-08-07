@@ -1,0 +1,10 @@
+sourceRepository: uniquecr.azurecr.io
+targetRepository: polishednight8579.azurecr.io
+charts:
+- name: helm/backend-service
+  version: 1.0.0
+  # todo: can later support a different or flatter path in target repository
+- name: helm/image-pull-secret
+  version: 1.0.0
+- name: helm/web-app
+  version: 1.2.0
