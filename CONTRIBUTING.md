@@ -8,8 +8,8 @@ Refer to the [oclif documentation](https://oclif.io/docs/generator_commands#ocli
 
 ### Before the PR
 ```
-npm version [minor|patch]
-oclif readme
+# commit changes, then
+npm version
 ```
 
 Minimal actions will ensure that the `package.json` and `README.md` have changed as will the reviewers.

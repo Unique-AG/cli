@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.1] - 2024-08-14
+
+### Changed
+#### `mirror:charts`
+- Command now supports flag `-p`/`--push-plugin` to select different helm plugins to push the charts to the destination registry. Refer to the command documentation for more detail.
+
 ## [0.4.0] - 2024-08-06
 
 ### Changed

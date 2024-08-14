@@ -20,7 +20,7 @@ $ npm install -g @unique-ag/cli
 $ qcli COMMAND
 running command...
 $ qcli (--version)
-@unique-ag/cli/0.4.0 darwin-arm64 node-v20.14.0
+@unique-ag/cli/0.4.1 darwin-arm64 node-v20.14.0
 $ qcli --help [COMMAND]
 USAGE
   $ qcli COMMAND
@@ -66,12 +66,15 @@ Pulls charts from a source and pushes them to a new registry.
 
 ```
 USAGE
-  $ qcli mirror charts -f <value> [-k] [-s <value>] [-t <value>]
+  $ qcli mirror charts -f <value> [-k] [-p <value>] [-s <value>] [-t <value>]
 
 FLAGS
   -f, --chart-list-file=<value>    (required) [default: examples/mirror-charts.schema.yaml] Path to file that contains a
                                    list of charts to mirror.
   -k, --keep                       If true, keeps the downloaded tarballs.
+  -p, --push-plugin=<value>        [default: push] Which plugin will be used to "push" charts to the target.
+                                   Defaults to native helm push but could be set to e.g. "cm-push" (for ChartMuseum).
+                                   Note: The plugin must be pre-installed using "helm plugin install".
   -s, --source-repository=<value>  Source repository from where the charts will be pulled, this overrides the value
                                    specified in the chart-list-file.
   -t, --target-repository=<value>  Target repository where the charts will go, this overrides the value specified in the
@@ -107,7 +110,7 @@ EXAMPLES
   $ qcli mirror charts
 ```
 
-_See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.4.0/src/commands/mirror/charts.ts)_
+_See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.4.1/src/commands/mirror/charts.ts)_
 
 ## `qcli mirror images`
 
@@ -157,7 +160,7 @@ EXAMPLES
   $ qcli mirror images
 ```
 
-_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.4.0/src/commands/mirror/images.ts)_
+_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.4.1/src/commands/mirror/images.ts)_
 
 ## `qcli plugins`
 
