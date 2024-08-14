@@ -9,7 +9,7 @@ Refer to the [oclif documentation](https://oclif.io/docs/generator_commands#ocli
 ### Before the PR
 ```
 # commit changes, then
-npm version
+npm version [minor|patch]
 ```
 
 Minimal actions will ensure that the `package.json` and `README.md` have changed as will the reviewers.
