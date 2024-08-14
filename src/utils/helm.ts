@@ -6,7 +6,7 @@ export async function helmPull({ chartName,chartPath, clipboard, repository, ver
   return `${clipboard}/${chartName}-${version}.tgz`;
 }
 
-export async function helmPush({ nestedPath, repository, tgzPath }: { nestedPath?: string, repository: string, tgzPath: string }): Promise<void> {
-  const cmd = `helm push ${tgzPath} oci://${repository}${nestedPath ? `/${nestedPath}` : ''}`;
+export async function helmPush({ nestedPath, pushPlugin, repository, tgzPath }: { nestedPath?: string, pushPlugin: string, repository: string, tgzPath: string }): Promise<void> {
+  const cmd = `helm ${pushPlugin} ${tgzPath} oci://${repository}${nestedPath ? `/${nestedPath}` : ''}`;
   await execPromisified(cmd);
 }

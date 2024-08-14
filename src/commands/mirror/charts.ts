@@ -60,6 +60,13 @@ az acr login --name <REGISTRY_NAME>
       char: 'k',
       description: 'If true, keeps the downloaded tarballs.'
     }),
+    'push-plugin': Flags.string({
+      char: 'p',
+      default: 'push',
+      description: `Which plugin will be used to "push" charts to the target. 
+Defaults to native helm push but could be set to e.g. "cm-push" (for ChartMuseum).
+Note: The plugin must be pre-installed using "helm plugin install".`
+    }),
     'source-repository': Flags.string({
       char: 's',
       description: 'Source repository from where the charts will be pulled, this overrides the value specified in the chart-list-file.'
@@ -78,6 +85,7 @@ az acr login --name <REGISTRY_NAME>
     const chartListFile = this.flags['chart-list-file'];
     const sourceRepository = this.flags['source-repository'];
     const targetRepository = this.flags['target-repository'];
+    const pushPlugin = this.flags['push-plugin'];
     const { keep } = this.flags;
     const clipboard = temporaryDirectory({ prefix: TEMPY_PREFIX });
 
@@ -120,7 +128,7 @@ az acr login --name <REGISTRY_NAME>
 
         this.log(`Pulling ${ux.colorize(LIGHT_BLUE, `${name}`)} from ${ux.colorize(LIGHT_BLUE, source)} and pushing it to ${ux.colorize(LIGHT_BLUE, target)}.`);
         const tgzPath = await helmPull({ chartName, chartPath, clipboard, repository: source, version });
-        await helmPush({ nestedPath: chartPath, repository: target, tgzPath });
+        await helmPush({ nestedPath: chartPath, pushPlugin, repository: target, tgzPath });
       }));
       
       const rejectedOperations = operations.filter((operation) => operation.status === 'rejected');
