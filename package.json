@@ -1,36 +1,36 @@
 {
   "name": "@unique-ag/cli",
   "description": "Unique CLI, wrapping the most common actions needed by Uniques clients into a single command line tool.",
-  "version": "0.5.0",
+  "version": "0.4.1",
   "author": "Unique AG",
   "bin": {
     "qcli": "./bin/run.js"
   },
   "bugs": "https://github.com/Unique-AG/cli/issues",
   "dependencies": {
-    "@oclif/core": "^4.0.23",
-    "@oclif/plugin-help": "^6.2.12",
-    "@oclif/plugin-plugins": "^5.4.9",
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "@oclif/plugin-plugins": "^5",
     "joi": "^17.13.3",
     "tempy": "^3.1.0",
-    "yaml": "^2.5.1"
+    "yaml": "^2.4.5"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
-    "@oclif/test": "^4.0.9",
-    "@types/chai": "^4.3.19",
-    "@types/mocha": "^10.0.8",
-    "@types/node": "^18.19.50",
-    "chai": "^4.5.0",
-    "eslint": "^8.57.1",
-    "eslint-config-oclif": "^5.2.1",
-    "eslint-config-oclif-typescript": "^3.1.11",
-    "eslint-config-prettier": "^9.1.0",
-    "mocha": "^10.7.3",
-    "oclif": "^4.14.35",
-    "shx": "^0.3.4",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.6.2"
+    "@oclif/test": "^4",
+    "@types/chai": "^4",
+    "@types/mocha": "^10",
+    "@types/node": "^18",
+    "chai": "^4",
+    "eslint": "^8",
+    "eslint-config-oclif": "^5",
+    "eslint-config-oclif-typescript": "^3",
+    "eslint-config-prettier": "^9",
+    "mocha": "^10",
+    "oclif": "^4",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "typescript": "^5"
   },
   "engines": {
     "node": ">=18.0.0"

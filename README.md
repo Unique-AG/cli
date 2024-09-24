@@ -20,7 +20,7 @@ $ npm install -g @unique-ag/cli
 $ qcli COMMAND
 running command...
 $ qcli (--version)
-@unique-ag/cli/0.5.0 darwin-arm64 node-v20.14.0
+@unique-ag/cli/0.4.1 darwin-arm64 node-v20.14.0
 $ qcli --help [COMMAND]
 USAGE
   $ qcli COMMAND
@@ -29,6 +29,7 @@ USAGE
 <!-- usagestop -->
 ## Commands
 <!-- commands -->
+* [`qcli az acr import [FILE]`](#qcli-az-acr-import-file)
 * [`qcli help [COMMAND]`](#qcli-help-command)
 * [`qcli mirror charts`](#qcli-mirror-charts)
 * [`qcli mirror images`](#qcli-mirror-images)
@@ -39,6 +40,30 @@ USAGE
 * [`qcli plugins reset`](#qcli-plugins-reset)
 * [`qcli plugins uninstall [PLUGIN]`](#qcli-plugins-uninstall-plugin)
 * [`qcli plugins update`](#qcli-plugins-update)
+
+## `qcli az acr import [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ qcli az acr import [FILE] [-f] [-n <value>]
+
+ARGUMENTS
+  FILE  file to read
+
+FLAGS
+  -f, --force
+  -n, --name=<value>  name to print
+
+DESCRIPTION
+  describe the command here
+
+EXAMPLES
+  $ qcli az acr import
+```
+
+_See code: [src/commands/az/acr/import.ts](https://github.com/Unique-AG/cli/blob/v0.4.1/src/commands/az/acr/import.ts)_
 
 ## `qcli help [COMMAND]`
 
@@ -58,7 +83,7 @@ DESCRIPTION
   Display help for qcli.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.2.12/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.2.6/src/commands/help.ts)_
 
 ## `qcli mirror charts`
 
@@ -110,7 +135,7 @@ EXAMPLES
   $ qcli mirror charts
 ```
 
-_See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.5.0/src/commands/mirror/charts.ts)_
+_See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.4.1/src/commands/mirror/charts.ts)_
 
 ## `qcli mirror images`
 
@@ -133,9 +158,6 @@ FLAGS
 DESCRIPTION
 
   Pulls images from a source, retags them, and pushes them to a new registry.
-  If you use an Azure Container Registry as target, you might want to use the included az acr import sub-command as it
-  offers significant performance improvements.
-
   The "image-list-file" flag specifies which images to mirror. You can find an example config file in
   https://github.com/Unique-AG/cli/tree/main/examples.
 
@@ -163,7 +185,7 @@ EXAMPLES
   $ qcli mirror images
 ```
 
-_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.5.0/src/commands/mirror/images.ts)_
+_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.4.1/src/commands/mirror/images.ts)_
 
 ## `qcli plugins`
 
@@ -186,7 +208,7 @@ EXAMPLES
   $ qcli plugins
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/index.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/index.ts)_
 
 ## `qcli plugins:inspect PLUGIN...`
 
@@ -213,7 +235,7 @@ EXAMPLES
   $ qcli plugins inspect myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/inspect.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/inspect.ts)_
 
 ## `qcli plugins install PLUGIN`
 
@@ -262,7 +284,7 @@ EXAMPLES
     $ qcli plugins install someuser/someplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/install.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/install.ts)_
 
 ## `qcli plugins link PATH`
 
@@ -292,7 +314,7 @@ EXAMPLES
   $ qcli plugins link myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/link.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/link.ts)_
 
 ## `qcli plugins reset`
 
@@ -307,7 +329,7 @@ FLAGS
   --reinstall  Reinstall all plugins after uninstalling.
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/reset.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/reset.ts)_
 
 ## `qcli plugins uninstall [PLUGIN]`
 
@@ -335,7 +357,7 @@ EXAMPLES
   $ qcli plugins uninstall myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/uninstall.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/uninstall.ts)_
 
 ## `qcli plugins update`
 
@@ -353,7 +375,7 @@ DESCRIPTION
   Update installed plugins.
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/update.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/update.ts)_
 <!-- commandsstop -->
 
 ## Examples
