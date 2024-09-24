@@ -23,6 +23,8 @@ export default class MirrorImages extends Command {
   static args = {}
   static description = `
 Pulls images from a source, retags them, and pushes them to a new registry.
+If you use an Azure Container Registry as target, you might want to use the included az acr import sub-command as it offers significant performance improvements.
+
 The "image-list-file" flag specifies which images to mirror. You can find an example config file in https://github.com/Unique-AG/cli/tree/main/examples.
 
 For security reasons, the active session must be preemptively logged in to both OCI registries.`

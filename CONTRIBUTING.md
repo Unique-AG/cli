@@ -6,6 +6,11 @@
 ### Working with oclif
 Refer to the [oclif documentation](https://oclif.io/docs/generator_commands#oclif-generate-command-name) to learn how to get started.
 
+### Testing locally
+```
+./bin/dev.js <alias or command> -flag1 foo -flag2 bar
+```
+
 ### Before the PR
 ```
 # commit changes, then
