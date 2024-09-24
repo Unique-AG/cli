@@ -29,6 +29,7 @@ USAGE
 <!-- usagestop -->
 ## Commands
 <!-- commands -->
+* [`qcli az acr import`](#qcli-az-acr-import)
 * [`qcli help [COMMAND]`](#qcli-help-command)
 * [`qcli mirror charts`](#qcli-mirror-charts)
 * [`qcli mirror images`](#qcli-mirror-images)
@@ -39,6 +40,53 @@ USAGE
 * [`qcli plugins reset`](#qcli-plugins-reset)
 * [`qcli plugins uninstall [PLUGIN]`](#qcli-plugins-uninstall-plugin)
 * [`qcli plugins update`](#qcli-plugins-update)
+
+## `qcli az acr import`
+
+Instructs the Azure CLI to import multiple images to an Azure Container Registry. 
+
+```
+USAGE
+  $ qcli az acr import -f <value> -w -p <value> -u <value> [-b <value>]
+
+FLAGS
+  -b, --batch-size=<value>       [default: 4] Number of images to transfer in a single batch in parallel. The higher the
+                                 number, the more resources will be consumed.
+  -f, --image-list-file=<value>  (required) [default: examples/az-acr-import.schema.yaml] Path to file that contains a
+                                 list of images to import.
+  -p, --source-password=<value>  (required) ⚠ Do not pass plaintext values but use an environment variable instead.
+                                 Password for the source registry.
+  -u, --source-username=<value>  (required) Username of the source registry.
+  -w, --no-wait                  (required) By default all imports are awaited. If you want to trigger the import in the
+                                 background, set this flag.
+
+DESCRIPTION
+
+  Instructs the Azure CLI to import multiple images to an Azure Container Registry.
+  If you do not use Azure Container Registry, you might want to use the included mirror:images command which supports
+  any target registry.
+  The "image-list-file" flag specifies which images to import. You can find an example config file in
+  https://github.com/Unique-AG/cli/tree/main/examples.
+
+  You must have the azure-cli installed and the active session must be preemptively logged in to the matching azure
+  subscription.
+
+  ⚠ The Azure CLI command needs the password supplied as a flag. The CLI itself does never print the flag but you should
+  still take care of the logs and the command history.
+  ⚠ Do set an environment variable for the password to avoid it being passed as text, see the example.
+  ⚠ Most systems pass secrets as environment variables, so normally no explicit password is needed in the command.
+
+
+ALIASES
+  $ qcli a a i
+
+EXAMPLES
+  export SOURCE_PASSWORD=<SENSITIVE_VALUE>
+
+    $ qcli az acr import
+```
+
+_See code: [src/commands/az/acr/import.ts](https://github.com/Unique-AG/cli/blob/v0.5.0/src/commands/az/acr/import.ts)_
 
 ## `qcli help [COMMAND]`
 

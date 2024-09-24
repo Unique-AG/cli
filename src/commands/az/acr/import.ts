@@ -19,7 +19,7 @@ const schema = Joi.object({
 });
 
 export default class AzAcrImport extends Command {
-  static aliases = ['az:acr:import', 'a:a:i'];
+  static aliases = ['a:a:i'];
   static args = {}
   static description = `
 Instructs the Azure CLI to import multiple images to an Azure Container Registry. 
