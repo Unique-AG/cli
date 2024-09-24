@@ -1,0 +1,18 @@
+sourceRegistry: uniquecr.azurecr.io
+targetRegistryName: polishednight8579
+images:
+- name: ai-service-assistants-core:2024.38
+- name: ai-service-assistants-reranker:2024.38
+- name: backend-service-app-repository:2024.38
+- name: backend-service-chat:2024.38
+- name: backend-service-event-socket:2024.38
+- name: backend-service-ingestion-worker:2024.38
+- name: backend-service-ingestion:2024.38
+- name: backend-service-scope-management:2024.38
+- name: backend-service-theme:2024.38
+- name: backend-service-webhook-scheduler:2024.38
+- name: backend-service-webhook-worker:2024.38
+- name: web-app-admin:2024.38
+- name: web-app-chat:2024.38
+- name: web-app-knowledge-upload:2024.38
+- name: web-app-theme:2024.38

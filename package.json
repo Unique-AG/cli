@@ -1,7 +1,7 @@
 {
   "name": "@unique-ag/cli",
   "description": "Unique CLI, wrapping the most common actions needed by Uniques clients into a single command line tool.",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "author": "Unique AG",
   "bin": {
     "qcli": "./bin/run.js"
@@ -57,6 +57,9 @@
     ],
     "topicSeparator": " ",
     "topics": {
+      "az:acr": {
+        "description": "Functionality that leverages the azure-cli to tackle certain daily challenges more elegantly."
+      },
       "mirror": {
         "description": "Functionality needed to mirror Unique artifacts into client environments to ensure availability, scalability and resilience."
       }
