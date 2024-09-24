@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2024-09-24
+
+### Added
+#### `az:acr:import`
+The `az:acr:import` command imports images from a source container registry to a Azure Container Registry but using the ACRs native import feature. Read the two commands help for more information on the difference.
+
+
 ## [0.4.1] - 2024-08-14
 
 ### Changed
