@@ -20,7 +20,7 @@ $ npm install -g @unique-ag/cli
 $ qcli COMMAND
 running command...
 $ qcli (--version)
-@unique-ag/cli/0.4.1 darwin-arm64 node-v20.14.0
+@unique-ag/cli/0.5.0 darwin-arm64 node-v20.14.0
 $ qcli --help [COMMAND]
 USAGE
   $ qcli COMMAND
@@ -29,7 +29,6 @@ USAGE
 <!-- usagestop -->
 ## Commands
 <!-- commands -->
-* [`qcli az acr import [FILE]`](#qcli-az-acr-import-file)
 * [`qcli help [COMMAND]`](#qcli-help-command)
 * [`qcli mirror charts`](#qcli-mirror-charts)
 * [`qcli mirror images`](#qcli-mirror-images)
@@ -40,30 +39,6 @@ USAGE
 * [`qcli plugins reset`](#qcli-plugins-reset)
 * [`qcli plugins uninstall [PLUGIN]`](#qcli-plugins-uninstall-plugin)
 * [`qcli plugins update`](#qcli-plugins-update)
-
-## `qcli az acr import [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ qcli az acr import [FILE] [-f] [-n <value>]
-
-ARGUMENTS
-  FILE  file to read
-
-FLAGS
-  -f, --force
-  -n, --name=<value>  name to print
-
-DESCRIPTION
-  describe the command here
-
-EXAMPLES
-  $ qcli az acr import
-```
-
-_See code: [src/commands/az/acr/import.ts](https://github.com/Unique-AG/cli/blob/v0.4.1/src/commands/az/acr/import.ts)_
 
 ## `qcli help [COMMAND]`
 
@@ -135,7 +110,7 @@ EXAMPLES
   $ qcli mirror charts
 ```
 
-_See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.4.1/src/commands/mirror/charts.ts)_
+_See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.5.0/src/commands/mirror/charts.ts)_
 
 ## `qcli mirror images`
 
@@ -158,6 +133,9 @@ FLAGS
 DESCRIPTION
 
   Pulls images from a source, retags them, and pushes them to a new registry.
+  If you use an Azure Container Registry as target, you might want to use the included az acr import sub-command as it
+  offers significant performance improvements.
+
   The "image-list-file" flag specifies which images to mirror. You can find an example config file in
   https://github.com/Unique-AG/cli/tree/main/examples.
 
@@ -185,7 +163,7 @@ EXAMPLES
   $ qcli mirror images
 ```
 
-_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.4.1/src/commands/mirror/images.ts)_
+_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.5.0/src/commands/mirror/images.ts)_
 
 ## `qcli plugins`
 
