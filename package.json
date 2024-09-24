@@ -55,7 +55,7 @@
       "@oclif/plugin-help",
       "@oclif/plugin-plugins"
     ],
-    "topicSeparator": ":",
+    "topicSeparator": " ",
     "topics": {
       "az:acr": {
         "description": "Functionality that leverages the azure-cli to tackle certain daily challenges more elegantly."

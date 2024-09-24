@@ -30,15 +30,15 @@ USAGE
 ## Commands
 <!-- commands -->
 * [`qcli help [COMMAND]`](#qcli-help-command)
-* [`qcli mirror:charts`](#qcli-mirrorcharts)
-* [`qcli mirror:images`](#qcli-mirrorimages)
+* [`qcli mirror charts`](#qcli-mirror-charts)
+* [`qcli mirror images`](#qcli-mirror-images)
 * [`qcli plugins`](#qcli-plugins)
 * [`qcli plugins:inspect PLUGIN...`](#qcli-pluginsinspect-plugin)
-* [`qcli plugins:install PLUGIN`](#qcli-pluginsinstall-plugin)
-* [`qcli plugins:link PATH`](#qcli-pluginslink-path)
-* [`qcli plugins:reset`](#qcli-pluginsreset)
-* [`qcli plugins:uninstall [PLUGIN]`](#qcli-pluginsuninstall-plugin)
-* [`qcli plugins:update`](#qcli-pluginsupdate)
+* [`qcli plugins install PLUGIN`](#qcli-plugins-install-plugin)
+* [`qcli plugins link PATH`](#qcli-plugins-link-path)
+* [`qcli plugins reset`](#qcli-plugins-reset)
+* [`qcli plugins uninstall [PLUGIN]`](#qcli-plugins-uninstall-plugin)
+* [`qcli plugins update`](#qcli-plugins-update)
 
 ## `qcli help [COMMAND]`
 
@@ -60,13 +60,13 @@ DESCRIPTION
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.2.12/src/commands/help.ts)_
 
-## `qcli mirror:charts`
+## `qcli mirror charts`
 
 Pulls charts from a source and pushes them to a new registry.
 
 ```
 USAGE
-  $ qcli mirror:charts -f <value> [-k] [-p <value>] [-s <value>] [-t <value>]
+  $ qcli mirror charts -f <value> [-k] [-p <value>] [-s <value>] [-t <value>]
 
 FLAGS
   -f, --chart-list-file=<value>    (required) [default: examples/mirror-charts.schema.yaml] Path to file that contains a
@@ -89,7 +89,7 @@ DESCRIPTION
   For security reasons, the active session must be preemptively logged in to both OCI registries.
 
 ALIASES
-  $ qcli m:c
+  $ qcli m c
 
 EXAMPLES
   export SOURCE_OCI_REGISTRY: <VALUE>
@@ -100,25 +100,25 @@ EXAMPLES
   export TARGET_OCI_PASSWORD: <SENSITIVE_VALUE>
   docker login $SOURCE_OCI_REGISTRY -u $SOURCE_OCI_USERNAME -p $SOURCE_OCI_PASSWORD
   docker login $TARGET_OCI_REGISTRY -u $TARGET_OCI_USERNAME -p $TARGET_OCI_PASSWORD
-  $ qcli mirror:charts
+  $ qcli mirror charts
 
   export SOURCE_OCI_REGISTRY: <VALUE>
   export SOURCE_OCI_USERNAME: <SENSITIVE_VALUE>
   export SOURCE_OCI_PASSWORD: <SENSITIVE_VALUE>
   docker login $SOURCE_OCI_REGISTRY -u $SOURCE_OCI_USERNAME -p $SOURCE_OCI_PASSWORD
   az acr login --name <REGISTRY_NAME>
-  $ qcli mirror:charts
+  $ qcli mirror charts
 ```
 
 _See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.5.0/src/commands/mirror/charts.ts)_
 
-## `qcli mirror:images`
+## `qcli mirror images`
 
 Pulls images from a source, retags them, and pushes them to a new registry.
 
 ```
 USAGE
-  $ qcli mirror:images -f <value> [-b <value>] [-s <value>] [-t <value>]
+  $ qcli mirror images -f <value> [-b <value>] [-s <value>] [-t <value>]
 
 FLAGS
   -b, --batch-size=<value>       [default: 2] Number of images to transfer in a single batch in parallel. The higher the
@@ -142,7 +142,7 @@ DESCRIPTION
   For security reasons, the active session must be preemptively logged in to both OCI registries.
 
 ALIASES
-  $ qcli m:i
+  $ qcli m i
 
 EXAMPLES
   export SOURCE_OCI_REGISTRY: <VALUE>
@@ -153,14 +153,14 @@ EXAMPLES
   export TARGET_OCI_PASSWORD: <SENSITIVE_VALUE>
   docker login $SOURCE_OCI_REGISTRY -u $SOURCE_OCI_USERNAME -p $SOURCE_OCI_PASSWORD
   docker login $TARGET_OCI_REGISTRY -u $TARGET_OCI_USERNAME -p $TARGET_OCI_PASSWORD
-  $ qcli mirror:images
+  $ qcli mirror images
 
   export SOURCE_OCI_REGISTRY: <VALUE>
   export SOURCE_OCI_USERNAME: <SENSITIVE_VALUE>
   export SOURCE_OCI_PASSWORD: <SENSITIVE_VALUE>
   docker login $SOURCE_OCI_REGISTRY -u $SOURCE_OCI_USERNAME -p $SOURCE_OCI_PASSWORD
   az acr login --name <REGISTRY_NAME>
-  $ qcli mirror:images
+  $ qcli mirror images
 ```
 
 _See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.5.0/src/commands/mirror/images.ts)_
@@ -194,7 +194,7 @@ Displays installation properties of a plugin.
 
 ```
 USAGE
-  $ qcli plugins:inspect PLUGIN...
+  $ qcli plugins inspect PLUGIN...
 
 ARGUMENTS
   PLUGIN...  [default: .] Plugin to inspect.
@@ -210,18 +210,18 @@ DESCRIPTION
   Displays installation properties of a plugin.
 
 EXAMPLES
-  $ qcli plugins:inspect myplugin
+  $ qcli plugins inspect myplugin
 ```
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/inspect.ts)_
 
-## `qcli plugins:install PLUGIN`
+## `qcli plugins install PLUGIN`
 
 Installs a plugin into qcli.
 
 ```
 USAGE
-  $ qcli plugins:install PLUGIN... [--json] [-f] [-h] [-s | -v]
+  $ qcli plugins install PLUGIN... [--json] [-f] [-h] [-s | -v]
 
 ARGUMENTS
   PLUGIN...  Plugin to install.
@@ -246,31 +246,31 @@ DESCRIPTION
   Use the QCLI_NPM_REGISTRY environment variable to set the npm registry.
 
 ALIASES
-  $ qcli plugins:add
+  $ qcli plugins add
 
 EXAMPLES
   Install a plugin from npm registry.
 
-    $ qcli plugins:install myplugin
+    $ qcli plugins install myplugin
 
   Install a plugin from a github url.
 
-    $ qcli plugins:install https://github.com/someuser/someplugin
+    $ qcli plugins install https://github.com/someuser/someplugin
 
   Install a plugin from a github slug.
 
-    $ qcli plugins:install someuser/someplugin
+    $ qcli plugins install someuser/someplugin
 ```
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/install.ts)_
 
-## `qcli plugins:link PATH`
+## `qcli plugins link PATH`
 
 Links a plugin into the CLI for development.
 
 ```
 USAGE
-  $ qcli plugins:link PATH [-h] [--install] [-v]
+  $ qcli plugins link PATH [-h] [--install] [-v]
 
 ARGUMENTS
   PATH  [default: .] path to plugin
@@ -289,18 +289,18 @@ DESCRIPTION
 
 
 EXAMPLES
-  $ qcli plugins:link myplugin
+  $ qcli plugins link myplugin
 ```
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/link.ts)_
 
-## `qcli plugins:reset`
+## `qcli plugins reset`
 
 Remove all user-installed and linked plugins.
 
 ```
 USAGE
-  $ qcli plugins:reset [--hard] [--reinstall]
+  $ qcli plugins reset [--hard] [--reinstall]
 
 FLAGS
   --hard       Delete node_modules and package manager related files in addition to uninstalling plugins.
@@ -309,13 +309,13 @@ FLAGS
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/reset.ts)_
 
-## `qcli plugins:uninstall [PLUGIN]`
+## `qcli plugins uninstall [PLUGIN]`
 
 Removes a plugin from the CLI.
 
 ```
 USAGE
-  $ qcli plugins:uninstall [PLUGIN...] [-h] [-v]
+  $ qcli plugins uninstall [PLUGIN...] [-h] [-v]
 
 ARGUMENTS
   PLUGIN...  plugin to uninstall
@@ -328,22 +328,22 @@ DESCRIPTION
   Removes a plugin from the CLI.
 
 ALIASES
-  $ qcli plugins:unlink
-  $ qcli plugins:remove
+  $ qcli plugins unlink
+  $ qcli plugins remove
 
 EXAMPLES
-  $ qcli plugins:uninstall myplugin
+  $ qcli plugins uninstall myplugin
 ```
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.4.9/src/commands/plugins/uninstall.ts)_
 
-## `qcli plugins:update`
+## `qcli plugins update`
 
 Update installed plugins.
 
 ```
 USAGE
-  $ qcli plugins:update [-h] [-v]
+  $ qcli plugins update [-h] [-v]
 
 FLAGS
   -h, --help     Show CLI help.
