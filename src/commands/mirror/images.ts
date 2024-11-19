@@ -4,7 +4,7 @@ import { readFile, stat } from 'node:fs/promises';
 import { parse } from 'yaml';
 
 import { LIGHT_BLUE } from '../../utils/colors.js';
-import { dockerMove, dockerPull, dockerPush } from '../../utils/docker.js';
+import { dockerMove, dockerPull, dockerPush, dockerRemoveImage } from '../../utils/docker.js';
 
 const BATCH_SIZE = 2;
 
@@ -26,6 +26,8 @@ Pulls images from a source, retags them, and pushes them to a new registry.
 If you use an Azure Container Registry as target, you might want to use the included az acr import sub-command as it offers significant performance improvements.
 
 The "image-list-file" flag specifies which images to mirror. You can find an example config file in https://github.com/Unique-AG/cli/tree/main/examples.
+
+This command can also mirror images from public registries like Docker Hub or Quay.
 
 For security reasons, the active session must be preemptively logged in to both OCI registries.`
 
@@ -124,12 +126,15 @@ az acr login --name <REGISTRY_NAME>
           await dockerPull(fullSourceTag);
           await dockerMove(fullSourceTag, fullTargetTag);
           await dockerPush(fullTargetTag);
+          await dockerRemoveImage(fullSourceTag);
         }));
       }
+
+      this.log(`Finished to transfer images from [${ux.colorize(LIGHT_BLUE, source)}] to [${ux.colorize(LIGHT_BLUE, target)}].`);
 
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
       this.error(`Error transferring images: ${errorMessage}`);
-    }
+    } 
   }
 }

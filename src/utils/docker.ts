@@ -14,3 +14,8 @@ export async function dockerPush(fullTargetTag: string): Promise<void> {
   const cmd = `docker push ${fullTargetTag}`;
   await execPromisified(cmd);
 }
+
+export async function dockerRemoveImage(fullTargetTag: string): Promise<void> {
+  const cmd = `docker rmi ${fullTargetTag}`;
+  await execPromisified(cmd);
+}
