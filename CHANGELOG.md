@@ -2,12 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.1] - 2024-11-19
+
+### Added
+#### `mirror:images`
+- Example file [`mirror-images-public.schema.yaml`](./examples/mirror-images-public.schema.yaml) to demonstrate how to mirror images from public registries like Docker Hub.
+
+### Changed
+#### `mirror:images`
+- Remove the image locally after it has been pushed to the target registry in order to not bloat the local disk.
+
 ## [0.5.0] - 2024-09-24
 
 ### Added
 #### `az:acr:import`
 The `az:acr:import` command imports images from a source container registry to a Azure Container Registry but using the ACRs native import feature. Read the two commands help for more information on the difference.
-
 
 ## [0.4.1] - 2024-08-14
 

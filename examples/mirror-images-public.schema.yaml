@@ -1,0 +1,4 @@
+sourceRegistry: docker.io
+targetRegistry: polishednight8579.azurecr.io
+images:
+- name: busybox:1.37

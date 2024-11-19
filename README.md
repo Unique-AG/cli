@@ -20,7 +20,7 @@ $ npm install -g @unique-ag/cli
 $ qcli COMMAND
 running command...
 $ qcli (--version)
-@unique-ag/cli/0.5.0 darwin-arm64 node-v20.14.0
+@unique-ag/cli/0.5.1 darwin-arm64 node-v20.14.0
 $ qcli --help [COMMAND]
 USAGE
   $ qcli COMMAND
@@ -86,7 +86,7 @@ EXAMPLES
     $ qcli az acr import
 ```
 
-_See code: [src/commands/az/acr/import.ts](https://github.com/Unique-AG/cli/blob/v0.5.0/src/commands/az/acr/import.ts)_
+_See code: [src/commands/az/acr/import.ts](https://github.com/Unique-AG/cli/blob/v0.5.1/src/commands/az/acr/import.ts)_
 
 ## `qcli help [COMMAND]`
 
@@ -158,7 +158,7 @@ EXAMPLES
   $ qcli mirror charts
 ```
 
-_See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.5.0/src/commands/mirror/charts.ts)_
+_See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.5.1/src/commands/mirror/charts.ts)_
 
 ## `qcli mirror images`
 
@@ -187,6 +187,8 @@ DESCRIPTION
   The "image-list-file" flag specifies which images to mirror. You can find an example config file in
   https://github.com/Unique-AG/cli/tree/main/examples.
 
+  This command can also mirror images from public registries like Docker Hub or Quay.
+
   For security reasons, the active session must be preemptively logged in to both OCI registries.
 
 ALIASES
@@ -211,7 +213,7 @@ EXAMPLES
   $ qcli mirror images
 ```
 
-_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.5.0/src/commands/mirror/images.ts)_
+_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.5.1/src/commands/mirror/images.ts)_
 
 ## `qcli plugins`
 
