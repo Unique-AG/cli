@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [0.5.1] - 2024-11-19
 
+### Added
+#### `mirror:images`
+- Example file [`mirror-images-public.schema.yaml`](./examples/mirror-images-public.schema.yaml) to demonstrate how to mirror images from public registries like Docker Hub.
+
 ### Changed
 #### `mirror:images`
 - Remove the image locally after it has been pushed to the target registry in order to not bloat the local disk.
