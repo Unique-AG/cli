@@ -1,9 +1,13 @@
 checks:
-  - component: record
+  - component: all
+    displayName: Chat or Recording App
+    expectedStatus: 200
+    url: https://{{domain}}
+  - component: recording
     displayName: Recording API
     expectedStatus: 200
     url: https://api.{{domain}}/probe
-  - component: record
+  - component: recording
     displayName: Microsoft Authentication API and Collector
     expectedStatus: 200
     url: https://auth.{{domain}}/probe
@@ -23,7 +27,7 @@ checks:
     displayName: Event Socket API
     expectedStatus: 200
     url: https://{{apiHost}}.{{domain}}/event-socket/probe
-  - component: record
+  - component: chat
     displayName: Ingestion / Knowledge Base API
     expectedStatus: 200
     url: https://{{apiHost}}.{{domain}}/ingestion/probe
@@ -35,10 +39,6 @@ checks:
     displayName: IDP Service
     expectedStatus: 200
     url: https://id.{{domain}}/debug/ready
-  - component: all
-    displayName: Chat or Recording App
-    expectedStatus: 200
-    url: https://{{domain}}
   - component: chat
     displayName: Admin App
     expectedStatus: 200
@@ -47,7 +47,7 @@ checks:
     displayName: Chat App
     expectedStatus: 200
     url: https://{{domain}}/chat/health
-  - component: record
+  - component: chat
     displayName: Knowledge Upload App
     expectedStatus: 200
     url: https://{{domain}}/knowledge-upload/health
