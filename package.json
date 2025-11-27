@@ -10,25 +10,25 @@
   "dependencies": {
     "@oclif/core": "^4",
     "@oclif/plugin-help": "^6",
-    "@oclif/plugin-plugins": "^5",
-    "joi": "^17.13.3",
+    "@oclif/plugin-plugins": "^3.1.0",
+    "joi": "^18.0.2",
     "tempy": "^3.1.0",
-    "yaml": "^2.4.5"
+    "yaml": "^2.8.1"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
     "@oclif/test": "^4",
-    "@types/chai": "^4",
+    "@types/chai": "^5",
     "@types/mocha": "^10",
-    "@types/node": "^18",
-    "chai": "^4",
-    "eslint": "^8",
-    "eslint-config-oclif": "^5",
+    "@types/node": "^24",
+    "chai": "^6",
+    "eslint": "^9",
+    "eslint-config-oclif": "^6",
     "eslint-config-oclif-typescript": "^3",
-    "eslint-config-prettier": "^9",
-    "mocha": "^10",
+    "eslint-config-prettier": "^10",
+    "mocha": "^11",
     "oclif": "^4",
-    "shx": "^0.3.3",
+    "shx": "^0.4.0",
     "ts-node": "^10",
     "typescript": "^5"
   },
@@ -62,6 +62,9 @@
       },
       "mirror": {
         "description": "Functionality needed to mirror Unique artifacts into client environments to ensure availability, scalability and resilience."
+      },
+      "util": {
+        "description": "Utility commands for diagnostics, health checks, and operational tasks."
       }
     }
   },
