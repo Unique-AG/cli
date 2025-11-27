@@ -20,7 +20,7 @@ $ npm install -g @unique-ag/cli
 $ qcli COMMAND
 running command...
 $ qcli (--version)
-@unique-ag/cli/0.5.1 darwin-arm64 node-v20.14.0
+@unique-ag/cli/0.6.0 darwin-arm64 node-v25.1.0
 $ qcli --help [COMMAND]
 USAGE
   $ qcli COMMAND
@@ -35,11 +35,11 @@ USAGE
 * [`qcli mirror images`](#qcli-mirror-images)
 * [`qcli plugins`](#qcli-plugins)
 * [`qcli plugins:inspect PLUGIN...`](#qcli-pluginsinspect-plugin)
-* [`qcli plugins install PLUGIN`](#qcli-plugins-install-plugin)
-* [`qcli plugins link PATH`](#qcli-plugins-link-path)
-* [`qcli plugins reset`](#qcli-plugins-reset)
-* [`qcli plugins uninstall [PLUGIN]`](#qcli-plugins-uninstall-plugin)
+* [`qcli plugins:install PLUGIN...`](#qcli-pluginsinstall-plugin)
+* [`qcli plugins:link PLUGIN`](#qcli-pluginslink-plugin)
+* [`qcli plugins:uninstall PLUGIN...`](#qcli-pluginsuninstall-plugin)
 * [`qcli plugins update`](#qcli-plugins-update)
+* [`qcli util probe DOMAIN`](#qcli-util-probe-domain)
 
 ## `qcli az acr import`
 
@@ -86,7 +86,7 @@ EXAMPLES
     $ qcli az acr import
 ```
 
-_See code: [src/commands/az/acr/import.ts](https://github.com/Unique-AG/cli/blob/v0.5.1/src/commands/az/acr/import.ts)_
+_See code: [src/commands/az/acr/import.ts](https://github.com/Unique-AG/cli/blob/v0.6.0/src/commands/az/acr/import.ts)_
 
 ## `qcli help [COMMAND]`
 
@@ -158,7 +158,7 @@ EXAMPLES
   $ qcli mirror charts
 ```
 
-_See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.5.1/src/commands/mirror/charts.ts)_
+_See code: [src/commands/mirror/charts.ts](https://github.com/Unique-AG/cli/blob/v0.6.0/src/commands/mirror/charts.ts)_
 
 ## `qcli mirror images`
 
@@ -213,7 +213,7 @@ EXAMPLES
   $ qcli mirror images
 ```
 
-_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.5.1/src/commands/mirror/images.ts)_
+_See code: [src/commands/mirror/images.ts](https://github.com/Unique-AG/cli/blob/v0.6.0/src/commands/mirror/images.ts)_
 
 ## `qcli plugins`
 
@@ -236,7 +236,7 @@ EXAMPLES
   $ qcli plugins
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/index.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.1.0/src/commands/plugins/index.ts)_
 
 ## `qcli plugins:inspect PLUGIN...`
 
@@ -260,75 +260,65 @@ DESCRIPTION
   Displays installation properties of a plugin.
 
 EXAMPLES
-  $ qcli plugins inspect myplugin
+  $ qcli plugins:inspect myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/inspect.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.1.0/src/commands/plugins/inspect.ts)_
 
-## `qcli plugins install PLUGIN`
+## `qcli plugins:install PLUGIN...`
 
-Installs a plugin into qcli.
+Installs a plugin into the CLI.
 
 ```
 USAGE
-  $ qcli plugins install PLUGIN... [--json] [-f] [-h] [-s | -v]
+  $ qcli plugins install PLUGIN...
 
 ARGUMENTS
   PLUGIN...  Plugin to install.
 
 FLAGS
-  -f, --force    Force npm to fetch remote resources even if a local copy exists on disk.
+  -f, --force    Run yarn install with force flag.
   -h, --help     Show CLI help.
-  -s, --silent   Silences npm output.
-  -v, --verbose  Show verbose npm output.
-
-GLOBAL FLAGS
-  --json  Format output as json.
+  -v, --verbose
 
 DESCRIPTION
-  Installs a plugin into qcli.
-
-  Uses npm to install plugins.
+  Installs a plugin into the CLI.
+  Can be installed from npm or a git url.
 
   Installation of a user-installed plugin will override a core plugin.
 
-  Use the QCLI_NPM_LOG_LEVEL environment variable to set the npm loglevel.
-  Use the QCLI_NPM_REGISTRY environment variable to set the npm registry.
+  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command
+  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in
+  the CLI without the need to patch and update the whole CLI.
+
 
 ALIASES
   $ qcli plugins add
 
 EXAMPLES
-  Install a plugin from npm registry.
+  $ qcli plugins:install myplugin 
 
-    $ qcli plugins install myplugin
+  $ qcli plugins:install https://github.com/someuser/someplugin
 
-  Install a plugin from a github url.
-
-    $ qcli plugins install https://github.com/someuser/someplugin
-
-  Install a plugin from a github slug.
-
-    $ qcli plugins install someuser/someplugin
+  $ qcli plugins:install someuser/someplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/install.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.1.0/src/commands/plugins/install.ts)_
 
-## `qcli plugins link PATH`
+## `qcli plugins:link PLUGIN`
 
 Links a plugin into the CLI for development.
 
 ```
 USAGE
-  $ qcli plugins link PATH [-h] [--install] [-v]
+  $ qcli plugins link PLUGIN
 
 ARGUMENTS
   PATH  [default: .] path to plugin
 
 FLAGS
-  -h, --help          Show CLI help.
+  -h, --help     Show CLI help.
   -v, --verbose
-      --[no-]install  Install dependencies after linking the plugin.
 
 DESCRIPTION
   Links a plugin into the CLI for development.
@@ -339,36 +329,21 @@ DESCRIPTION
 
 
 EXAMPLES
-  $ qcli plugins link myplugin
+  $ qcli plugins:link myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/link.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.1.0/src/commands/plugins/link.ts)_
 
-## `qcli plugins reset`
-
-Remove all user-installed and linked plugins.
-
-```
-USAGE
-  $ qcli plugins reset [--hard] [--reinstall]
-
-FLAGS
-  --hard       Delete node_modules and package manager related files in addition to uninstalling plugins.
-  --reinstall  Reinstall all plugins after uninstalling.
-```
-
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/reset.ts)_
-
-## `qcli plugins uninstall [PLUGIN]`
+## `qcli plugins:uninstall PLUGIN...`
 
 Removes a plugin from the CLI.
 
 ```
 USAGE
-  $ qcli plugins uninstall [PLUGIN...] [-h] [-v]
+  $ qcli plugins uninstall PLUGIN...
 
 ARGUMENTS
-  PLUGIN...  plugin to uninstall
+  PLUGIN  plugin to uninstall
 
 FLAGS
   -h, --help     Show CLI help.
@@ -380,12 +355,9 @@ DESCRIPTION
 ALIASES
   $ qcli plugins unlink
   $ qcli plugins remove
-
-EXAMPLES
-  $ qcli plugins uninstall myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/uninstall.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.1.0/src/commands/plugins/uninstall.ts)_
 
 ## `qcli plugins update`
 
@@ -403,7 +375,71 @@ DESCRIPTION
   Update installed plugins.
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v5.3.7/src/commands/plugins/update.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.1.0/src/commands/plugins/update.ts)_
+
+## `qcli util probe DOMAIN`
+
+Checks health probes for a Unique deployment.
+
+```
+USAGE
+  $ qcli util probe DOMAIN [-a <value>] [-c chat|record...] [-f <value>] [-t <value>]
+
+ARGUMENTS
+  DOMAIN  The domain to check health probes for.
+          Examples:
+          - test.unique.app
+          - uat.unique.app
+          - customer.unique.app
+
+FLAGS
+  -a, --api-host=<value>       [default: api] The API host prefix to use for API endpoints (e.g. "api" or "gateway").
+  -c, --component=<option>...  Component(s) to check health probes for. Can be specified multiple times. If not
+                               specified, all components are checked.
+                               <options: chat|record>
+  -f, --config=<value>         [default: examples/util-probe.schema.yaml] Path to the YAML config file containing health
+                               check definitions.
+  -t, --timeout=<value>        [default: 10000] Timeout in milliseconds for each HTTP request.
+
+DESCRIPTION
+
+  Checks health probes for a Unique deployment.
+  Verifies that all critical endpoints are responding with the expected HTTP status codes.
+
+  This command performs HTTP GET requests to all known health endpoints and reports their status.
+  If any endpoint fails to respond with the expected status code, the command exits with code 1.
+
+
+ALIASES
+  $ qcli u p
+
+EXAMPLES
+  Check health probes for the default domain (uat1.unique.app)
+
+    $ qcli util probe
+
+  Check health probes for a production domain
+
+    $ qcli util probe prod.unique.app
+
+  Check health probes with a custom API host
+
+    $ qcli util probe customer.unique.app --api-host gateway
+
+  Check only chat-related health probes
+
+    $ qcli util probe prod.unique.app -c chat
+
+  Check both chat and record health probes
+
+    $ qcli util probe prod.unique.app -c chat -c record
+
+  Use a custom config file for health probes
+
+    $ qcli util probe prod.unique.app -f custom-probes.yaml
+```
+
+_See code: [src/commands/util/probe.ts](https://github.com/Unique-AG/cli/blob/v0.6.0/src/commands/util/probe.ts)_
 <!-- commandsstop -->
 
 ## Examples
