@@ -10,7 +10,7 @@
   "dependencies": {
     "@oclif/core": "^4",
     "@oclif/plugin-help": "^6",
-    "@oclif/plugin-plugins": "^3.1.0",
+    "@oclif/plugin-plugins": "^5.4.57",
     "joi": "^18.0.2",
     "tempy": "^3.1.0",
     "yaml": "^2.8.1"
